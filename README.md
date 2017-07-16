@@ -5,8 +5,10 @@ Enyx is an enumerator tool about grabbing the possible IPV6 of a machine through
 
 <IMG SRC="https://raw.githubusercontent.com/trickster0/Enyx/master/enyx.png"/>
 
-USAGE:
-python enyx.py IP
+<strong>USAGE:</strong>
+<p>
+<pre><code>python enyx.py IP
+</code></pre>
 
 || Copyright 2017 (License) ||
 
