@@ -3,7 +3,7 @@ Enyx SNMP IPv6 Enumeration Tool
 
 Enyx is an enumerator tool about grabbing the possible IPV6 of a machine through the snmp protocol.
 
-![alt tag](https://github.com/trickster0/Enyx/edit/master/enyx.png)
+![myimage-alt-tag](https://github.com/trickster0/Enyx/edit/master/enyx.png)
 
 USAGE:
 python enyx.py IP
