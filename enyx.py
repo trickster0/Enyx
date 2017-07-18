@@ -95,4 +95,5 @@ if os.path.isfile("/usr/bin/snmpwalk"):
     print "[+] Link-Local -> " + " " + final3
 else:
     print "[X] Please Install snmpwalk!"
+    print "[*] sudo apt-get install snmp"
     sys.exit()
