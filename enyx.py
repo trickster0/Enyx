@@ -19,7 +19,7 @@ print '''#######################################################################
 \r\n'''
 if len(sys.argv)<4:
         print "[+] Usage: " + str(sys.argv[0]) + " snmpversion communitystring IP"
-	print "[+] snmpversion can be either 1 or 2c.\r\n"
+	print "[+] snmpversion can be either 1 or 2c\r\n"
         sys.exit()
 if os.path.isfile("/usr/bin/snmpwalk"):
     print "[+] Snmpwalk found."
@@ -27,7 +27,7 @@ if os.path.isfile("/usr/bin/snmpwalk"):
     ip=str(sys.argv[3])
     version=str(sys.argv[1])
     community=str(sys.argv[2])
-    command = 'snmpwalk -c ' + community + ' -v ' + version + ' '  + ip + ' | grep "3.6.1.2.1.4.34.1.3.2.16"|cut -d "." -f 13-28 | cut -d " " -f 1'
+    command = 'snmpwalk -c ' + community + ' -v ' + version + ' '  + ip + ' iso.3.6.1.2.1.4.34.1.3.2.16|cut -d "." -f 13-28 | cut -d " " -f 1'
     p=subprocess.Popen(command, stdout=subprocess.PIPE, stderr=None, shell=True)
     output = p.communicate()[0]
 #splitting each ip
