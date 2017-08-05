@@ -11,6 +11,8 @@ Enyx is an enumerator tool about grabbing the possible IPV6 of a machine through
 [+] snmpversion can be either 1 or 2c
 </code></pre>
 
+***UPDATED TO BE SUPER FAST NOW***
+
 
 Author: Thanasis Tserpelis aka trickster0
 
