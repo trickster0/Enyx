@@ -7,7 +7,8 @@ Enyx is an enumerator tool about grabbing the possible IPV6 of a machine through
 
 <strong>USAGE:</strong>
 <p>
-<pre><code>python enyx.py IP
+<pre><code>[+] Usage: enyx.py snmpversion communitystring IP
+[+] snmpversion can be either 1 or 2c
 </code></pre>
 
 
