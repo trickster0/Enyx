@@ -18,83 +18,46 @@ print '''#######################################################################
 ###################################################################################
 \r\n'''
 if len(sys.argv)<4:
-        print "[+] Usage: " + str(sys.argv[0]) + " snmpversion communitystring IP"
+	print "[+] Usage: " + str(sys.argv[0]) + " snmpversion communitystring IP"
 	print "[+] snmpversion can be either 1 or 2c\r\n"
-        sys.exit()
+	sys.exit()
 if os.path.isfile("/usr/bin/snmpwalk"):
-    print "[+] Snmpwalk found."
-    print "[+] Grabbing IPv6."
-    ip=str(sys.argv[3])
-    version=str(sys.argv[1])
-    community=str(sys.argv[2])
-    command = 'snmpwalk -c ' + community + ' -v ' + version + ' '  + ip + ' iso.3.6.1.2.1.4.34.1.3.2.16|cut -d "." -f 13-28 | cut -d " " -f 1'
-    p=subprocess.Popen(command, stdout=subprocess.PIPE, stderr=None, shell=True)
-    output = p.communicate()[0]
-#splitting each ip
-    IPS=output.split("\n")
-#separating each ip in arrays
-    first=IPS[0]
-    second=IPS[1]
-    third=IPS[2]
-#joining the arrays to strigns
-    stringone=''.join(first)
-    stringtwo=''.join(second)
-    stringthree=''.join(third)
-#splitting the . between the strigns and making the from str>int>hex
-    list1=stringone.split(".")
-    integer1=map(int,list1)
-    hex1=map(hex,integer1)
-    list2=stringtwo.split(".")
-    integer2=map(int,list2)
-    hex2=map(hex,integer2)
-    list3=stringthree.split(".")
-    integer3=map(int,list3)
-    hex3=map(hex,integer3)
-#Removing 0x from all the inputs in the arrays
-    s=0
-    for j in hex3:
-    	    hex3[s]=j.replace("0x","")
-	    s=s+1
-    s=0
-    for h in hex2:
-            hex2[s]=h.replace("0x","")
-            s=s+1
-    s=0
-    for k in hex1:
-            hex1[s]=k.replace("0x","")
-            s=s+1
+	print "[+] Snmpwalk found."
+	ip=str(sys.argv[3])
+	version=str(sys.argv[1])
+	community=str(sys.argv[2])
+	command = 'snmpwalk -c ' + community + ' -v ' + version + ' '  + ip + ' iso.3.6.1.2.1.4.34.1.3.2.16|cut -d "." -f 13-28 | cut -d " " -f 1'
+	p=subprocess.Popen(command, stdout=subprocess.PIPE, stderr=None, shell=True)
+	output = p.communicate()[0]
+	IPS=output.split("\n")
+	output2 = len(IPS)-1
+	def ip(IPS):
+		global sentencecounter
+		for i in range(0,output2):
+			step1=IPS[i]
+			step2=''.join(step1)
+			step3=step2.split(".")
+			step4=map(int,step3)
+			step5=map(hex,step4)
+			s=0
+			for j in step5:
+				step5[s]=j.replace("0x","")
+				s=s+1
+			s=0
+			step6="0"
+			for l in step5:
+				if len(step5[s])<2:
+					step5[s]=step6+l
+				s=s+1
+			step7=''.join(step5)
+			step8=step7[:4] + ":" + step7[4:8] + ":" + step7[8:12] + ":" + step7[12:16] + ":" + step7[16:20] + ":" + step7[20:24] + ":" + step7[24:28] + ":" + step7[28:32]
+			sentences=["[+] Loopback -> ","[+] Link Local -> ","[+] Unique-Local -> "]
+			print sentences[sentencecounter] + step8
+			sentencecounter=sentencecounter+1
 
-#Creating doubles for inputs in arrays that are less than 2 digits aka 0x
-    s=0
-    mystring="0"
-    for l in hex3:
-	    if len(hex3[s])<2:
-		    hex3[s]=mystring+l
-	    s=s+1
-    s=0
-    mystring="0"
-    for z in hex2:
-            if len(hex2[s])<2:
-                    hex2[s]=mystring+z
-            s=s+1
-    s=0
-    mystring="0"
-    for y in hex1:
-            if len(hex1[s])<2:
-                    hex1[s]=mystring+y
-            s=s+1
-#joining the arrays
-    almost1=''.join(hex1)
-    almost2=''.join(hex2)
-    almost3=''.join(hex3)
-#adding : in the ip strigns
-    final1=almost1[:4] + ":" + almost1[4:8] + ":" + almost1[8:12] + ":" + almost1[12:16] + ":" + almost1[16:20] + ":" + almost1[20:24] + ":" + almost1[24:28] + ":" + almost1[28:32]
-    final2=almost2[:4] + ":" + almost2[4:8] + ":" + almost2[8:12] + ":" + almost2[12:16] + ":" + almost2[16:20] + ":" + almost2[20:24] + ":" + almost2[24:28] + ":" + almost2[28:32]
-    final3=almost3[:4] + ":" + almost3[4:8] + ":" + almost3[8:12] + ":" + almost3[12:16] + ":" + almost3[16:20] + ":" + almost3[20:24] + ":" + almost3[24:28] + ":" + almost3[28:32]
-    print "[+] Here They Come...\r\n"
-    print "[+] Loopback -> " + " " + final1
-    print "[+] Unique Local -> " + " " + final2
-    print "[+] Link-Local -> " + " " + final3
-else:
-    print "[X] Please Install snmpwalk!"
-    sys.exit()
+        if output2 == 1:
+                print "[X] No IPv6 IP Found."
+        else:
+                print "[+] Grabbing IPv6."
+                sentencecounter=0
+                ip(IPS)
